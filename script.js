@@ -22,18 +22,18 @@ function renderProducts() {
   });
 }
 
-let shoppingCart = JSON.parse(sessionStorage.getItem("shoppingCart")) || [];
+let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
 // Render cart list
 function renderCart() {
 	cartList.innerHTML = "";
-	shoppingCart.forEach((item, index) => {
+	cart.forEach((item, index) => {
 		const li = document.createElement("li");
 		li.innerHTML += `${item.name} - $${item.price}
 		<button onclick="removeFromCart(${index})">Remove</button>`;
 		cartList.appendChild(li)
 	})
 
-	sessionStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+	sessionStorage.setItem("cart", JSON.stringify(cart));
 }
 
 
@@ -41,21 +41,21 @@ function renderCart() {
 function addToCart(productId) {
 	let product = products.find((prod) => prod.id === productId);
 	if(product) {
-		shoppingCart.push(product);
+		cart.push(product);
 		renderCart();
 	}
 }
 
 // Remove item from cart
 function removeFromCart(productId) {
-	shoppingCart.splice(productId, 1);
+	cart.splice(productId, 1);
 	renderCart()
 }
 
 // Clear cart
 function clearCart() {
-	shoppingCart = [];
-	sessionStorage.removeItem("shoppingCart");
+	cart = [];
+	sessionStorage.removeItem("cart");
 	renderCart();
 }
 
